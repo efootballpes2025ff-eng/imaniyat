@@ -21,18 +21,18 @@
 
     <style>
         :root {
-            --primary-color: #1a5f7a;
-            --secondary-color: #159895;
-            --accent-color: #57c5b6;
-            --bg-color: #f0f2f5;
-            --card-bg: #ffffff;
-            --text-primary: #2c3e50;
-            --text-secondary: #7f8c8d;
+            --primary-color: #006400;
+            --secondary-color: #004d00;
+            --accent-color: #ffd700;
+            --bg-color: #006400;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-primary: #004d00;
+            --text-secondary: #556b2f;
             --success: #2ecc71;
             --warning: #f1c40f;
             --danger: #e74c3c;
-            --font-main: 'Tajawal', sans-serif;
-            --font-titles: 'Cairo', sans-serif;
+            --font-main: 'Amiri', serif;
+            --font-titles: 'Amiri', serif;
             --font-quran: 'Amiri', serif;
             --shadow: 0 4px 6px rgba(0,0,0,0.1);
             --radius: 15px;
@@ -49,7 +49,10 @@
         body {
             font-family: var(--font-main);
             background-color: var(--bg-color);
-            color: var(--text-primary);
+            background-image: url('https://i.ibb.co/2dyQ0kH/arabesque-pattern.png');
+            background-blend-mode: soft-light;
+            background-repeat: repeat;
+            color: var(--accent-color);
             padding-bottom: calc(var(--nav-height) + 20px);
             overflow-x: hidden;
         }
@@ -67,7 +70,7 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            color: white;
+            color: var(--accent-color);
             transition: opacity 0.5s;
         }
 
@@ -76,7 +79,7 @@
             height: 50px;
             border: 5px solid rgba(255,255,255,0.3);
             border-radius: 50%;
-            border-top-color: white;
+            border-top-color: var(--accent-color);
             animation: spin 1s ease-in-out infinite;
             margin-bottom: 20px;
         }
@@ -109,14 +112,29 @@
         /* Home Section */
         .header-card {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 20px;
+            color: var(--accent-color);
+            padding: 25px;
             border-radius: var(--radius);
             text-align: center;
             margin-bottom: 20px;
-            box-shadow: var(--shadow);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
             position: relative;
             overflow: hidden;
+            border: 2px solid var(--accent-color);
+        }
+
+        .header-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+        }
+
+        .header-card h2 {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .digital-clock {
@@ -129,32 +147,55 @@
         .date-display {
             font-size: 1rem;
             opacity: 0.9;
+            color: white;
         }
 
         .next-prayer {
             margin-top: 15px;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
             padding: 10px;
             border-radius: 10px;
             display: inline-block;
+            color: white;
         }
 
         .countdown {
             font-weight: bold;
             font-size: 1.2rem;
+            color: var(--accent-color);
         }
 
         .weather-badge {
             position: absolute;
             top: 15px;
             left: 15px;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
             padding: 5px 10px;
             border-radius: 20px;
             font-size: 0.9rem;
             display: flex;
             align-items: center;
             gap: 5px;
+            color: white;
+        }
+
+        .install-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: var(--primary-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: none;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            border: none;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 10;
         }
 
         /* Prayer Times List */
@@ -167,18 +208,26 @@
 
         .prayer-item {
             background: var(--card-bg);
-            padding: 15px 20px;
+            color: var(--text-primary);
+            padding: 18px 22px;
             border-radius: var(--radius);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: var(--shadow);
-            transition: transform 0.2s;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+            transition: all 0.3s ease;
+            border-right: 4px solid transparent;
+        }
+
+        .prayer-item:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+            border-right-color: var(--accent-color);
         }
 
         .prayer-item.active {
             background: var(--secondary-color);
-            color: white;
+            color: var(--accent-color);
             transform: scale(1.02);
             border: 2px solid var(--accent-color);
         }
@@ -204,10 +253,18 @@
 
         .achievement-card {
             background: var(--card-bg);
-            padding: 15px 10px;
+            color: var(--text-primary);
+            padding: 18px 12px;
             border-radius: var(--radius);
             text-align: center;
-            box-shadow: var(--shadow);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+            transition: all 0.3s ease;
+            border-bottom: 4px solid var(--accent-color);
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.18);
         }
 
         .achievement-icon {
@@ -237,8 +294,10 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.12);
             z-index: 1000;
+            border-top: 3px solid var(--accent-color);
+            backdrop-filter: blur(10px);
         }
 
         .nav-item {
@@ -248,17 +307,38 @@
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.8rem;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
             cursor: pointer;
+            padding: 10px 15px;
+            border-radius: 12px;
+            position: relative;
         }
 
         .nav-item i {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             margin-bottom: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item:hover i {
+            transform: scale(1.15);
         }
 
         .nav-item.active {
             color: var(--primary-color);
+            background: rgba(0, 100, 0, 0.1);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background: var(--accent-color);
+            border-radius: 0 0 5px 5px;
         }
 
         /* Calendar */
@@ -266,6 +346,7 @@
             width: 100%;
             border-collapse: collapse;
             background: var(--card-bg);
+            color: var(--text-primary);
             border-radius: var(--radius);
             overflow: hidden;
             box-shadow: var(--shadow);
@@ -279,7 +360,7 @@
 
         .calendar-table th {
             background: var(--primary-color);
-            color: white;
+            color: var(--accent-color);
             font-size: 0.9rem;
         }
 
@@ -288,7 +369,7 @@
         }
 
         .calendar-table tr.today {
-            background: rgba(21, 152, 149, 0.1);
+            background: rgba(0, 100, 0, 0.1);
             font-weight: bold;
         }
 
@@ -302,7 +383,7 @@
         .calendar-controls button {
             background: rgba(255,255,255,0.2);
             border: none;
-            color: white;
+            color: var(--accent-color);
             padding: 5px 10px;
             border-radius: 5px;
             cursor: pointer;
@@ -319,13 +400,23 @@
         .compass {
             width: 250px;
             height: 250px;
-            border: 10px solid var(--primary-color);
+            border: 12px solid var(--primary-color);
             border-radius: 50%;
             position: relative;
             margin: 20px 0;
-            background: white;
-            box-shadow: var(--shadow);
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2), inset 0 2px 10px rgba(0,0,0,0.1);
             transition: transform 0.5s ease-out;
+            position: relative;
+        }
+
+        .compass::before {
+            content: '';
+            position: absolute;
+            inset: -15px;
+            border: 3px solid var(--accent-color);
+            border-radius: 50%;
+            opacity: 0.5;
         }
 
         .compass-arrow {
@@ -368,7 +459,7 @@
             width: 200px;
             height: 200px;
             border-radius: 50%;
-            background: conic-gradient(var(--primary-color) 0deg, #ddd 0deg);
+            background: conic-gradient(var(--accent-color) 0deg, #ddd 0deg);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -390,7 +481,7 @@
         #dhikr-current {
             font-size: 4rem;
             font-weight: bold;
-            color: var(--primary-color);
+            color: var(--accent-color);
         }
 
         .dhikr-btn {
@@ -399,9 +490,9 @@
             border-radius: 50%;
             border: none;
             background: var(--secondary-color);
-            color: white;
+            color: var(--accent-color);
             font-size: 2rem;
-            box-shadow: 0 5px 15px rgba(21, 152, 149, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 100, 0, 0.4);
             cursor: pointer;
             transition: transform 0.1s;
         }
@@ -426,12 +517,57 @@
 
         .btn-primary {
             background: var(--primary-color);
-            color: white;
+            color: var(--accent-color);
         }
 
         .btn-secondary {
-            background: #ddd;
+            background: linear-gradient(135deg, #e0e0e0, #bdbdbd);
             color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #c0392b);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: var(--font-main);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .settings-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .settings-buttons button {
+            width: 100%;
         }
 
         .form-select {
@@ -452,6 +588,7 @@
 
         .event-card {
             background: var(--card-bg);
+            color: var(--text-primary);
             padding: 15px;
             border-radius: var(--radius);
             display: flex;
@@ -462,7 +599,7 @@
 
         .event-date {
             background: var(--secondary-color);
-            color: white;
+            color: var(--accent-color);
             padding: 5px 10px;
             border-radius: 10px;
             font-size: 0.8rem;
@@ -482,7 +619,7 @@
             width: 300px;
             height: 400px;
             background: var(--primary-color);
-            color: white;
+            color: var(--accent-color);
             border-radius: var(--radius);
             padding: 20px;
             display: flex;
@@ -545,6 +682,7 @@
 
         .audio-player {
             background: var(--card-bg);
+            color: var(--text-primary);
             padding: 20px;
             border-radius: var(--radius);
             text-align: center;
@@ -565,6 +703,7 @@
 
         .more-item {
             background: var(--card-bg);
+            color: var(--text-primary);
             padding: 20px 10px;
             border-radius: var(--radius);
             text-align: center;
@@ -595,9 +734,28 @@
 
         .dua-card {
             background: var(--card-bg);
-            padding: 15px;
+            color: var(--text-primary);
+            padding: 20px;
             border-radius: var(--radius);
-            box-shadow: var(--shadow);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+            transition: all 0.3s ease;
+            border-top: 3px solid var(--accent-color);
+            position: relative;
+        }
+
+        .dua-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+        }
+
+        .dua-card::before {
+            content: '❝';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 2rem;
+            color: var(--accent-color);
+            opacity: 0.3;
         }
 
         .dua-text {
@@ -641,13 +799,13 @@
 
         .filter-btn.active {
             background: var(--secondary-color);
-            color: white;
+            color: var(--accent-color);
         }
 
         .dua-category-tag {
             display: inline-block;
             font-size: 0.7rem;
-            background: rgba(21, 152, 149, 0.1);
+            background: rgba(0, 100, 0, 0.1);
             color: var(--secondary-color);
             padding: 2px 8px;
             border-radius: 10px;
@@ -710,20 +868,57 @@
         .live-container {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
+        }
+
+        .live-channel {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 2px solid var(--accent-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .live-channel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color), var(--accent-color));
         }
 
         .live-channel h3 {
-            margin-bottom: 10px;
+            color: var(--primary-color);
+            font-family: var(--font-titles);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .live-channel h3::before,
+        .live-channel h3::after {
+            content: '✦';
+            color: var(--accent-color);
+            font-size: 1rem;
         }
 
         .video-wrapper {
             position: relative;
             padding-bottom: 56.25%; /* 16:9 */
             height: 0;
-            background: #000;
-            border-radius: var(--radius);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border-radius: 12px;
             overflow: hidden;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.3), 0 4px 15px rgba(0,0,0,0.2);
+            border: 3px solid var(--accent-color);
         }
 
         .video-wrapper iframe {
@@ -732,6 +927,7 @@
             left: 0;
             width: 100%;
             height: 100%;
+            border: none;
         }
 
         .placeholder-video {
@@ -744,14 +940,157 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: white;
-            background: rgba(0,0,0,0.5);
+            color: var(--accent-color);
+            background: linear-gradient(135deg, rgba(0,100,0,0.9), rgba(0,77,0,0.95));
             cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .placeholder-video:hover {
+            background: linear-gradient(135deg, rgba(0,100,0,0.95), rgba(0,77,0,1));
         }
 
         .placeholder-video i {
-            font-size: 3rem;
+            font-size: 4rem;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+            filter: drop-shadow(0 0 10px var(--accent-color));
+        }
+
+        .placeholder-video p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        /* Maintenance */
+        .maintenance-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+            padding: 20px;
+        }
+
+        .maintenance-card {
+            background: var(--card-bg);
+            padding: 50px 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 3px solid var(--accent-color);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .maintenance-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color), var(--accent-color));
+        }
+
+        .maintenance-icon {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .maintenance-title {
+            font-family: var(--font-titles);
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .maintenance-text {
+            color: var(--text-primary);
+            font-size: 1.1rem;
             margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .maintenance-subtext {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .maintenance-decoration {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .decoration-line {
+            height: 2px;
+            width: 80px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+        }
+
+        .decoration-star {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+        }
+
+        .maintenance-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .maintenance-link {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--accent-color);
+            padding: 15px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .maintenance-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+
+        .maintenance-link i {
+            font-size: 1.2rem;
         }
 
         /* Tracker */
@@ -851,6 +1190,9 @@
         <!-- Home Section -->
         <section id="home" class="section active">
             <div class="header-card">
+                <button id="install-btn" class="install-btn">
+                    <i class="fas fa-download"></i> تحميل
+                </button>
                 <div class="weather-badge" id="weather-badge">
                     <i class="fas fa-cloud"></i>
                     <span id="temp">--°</span>
@@ -1108,28 +1450,28 @@
         <!-- Live Section -->
         <section id="live" class="section">
             <div class="header-card">
-                <h2>البث المباشر</h2>
+                <h2>📡 البث المباشر من الحرمين الشريفين</h2>
             </div>
-            <div class="live-container">
-                <div class="live-channel">
-                    <h3>الحرم المكي</h3>
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/_JAOKCrXaRE" frameborder="0" allowfullscreen></iframe>
-                        <!-- Note: YouTube Live URL changes, using a placeholder or search query might be better, but for now I'll use a generic structure or just a placeholder message if it fails -->
-                        <div class="placeholder-video">
-                            <i class="fas fa-play-circle"></i>
-                            <p>اضغط للمشاهدة</p>
-                        </div>
+            <div class="maintenance-container">
+                <div class="maintenance-card">
+                    <div class="maintenance-icon">
+                        <i class="fas fa-tools"></i>
                     </div>
-                </div>
-                <div class="live-channel">
-                    <h3>الحرم المدني</h3>
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/zZmE-NRMpxo" frameborder="0" allowfullscreen></iframe>
-                        <div class="placeholder-video">
-                            <i class="fas fa-play-circle"></i>
-                            <p>اضغط للمشاهدة</p>
-                        </div>
+                    <h3 class="maintenance-title">قيد الصيانة</h3>
+                    <p class="maintenance-text">نعتذر عن الإزعاج، قسم البث المباشر قيد التطوير والتحسين حالياً</p>
+                    <p class="maintenance-subtext">سيتم إعادة تشغيله قريباً بإذن الله</p>
+                    <div class="maintenance-decoration">
+                        <span class="decoration-line"></span>
+                        <span class="decoration-star">✦</span>
+                        <span class="decoration-line"></span>
+                    </div>
+                    <div class="maintenance-links">
+                        <a href="https://www.youtube.com/watch?v=60jU1HGlSVQ" target="_blank" class="maintenance-link">
+                            <i class="fab fa-youtube"></i> البث المباشر - مكة المكرمة
+                        </a>
+                        <a href="https://www.youtube.com/watch?v=zZmE-NRMpxo" target="_blank" class="maintenance-link">
+                            <i class="fab fa-youtube"></i> البث المباشر - المدينة المنورة
+                        </a>
                     </div>
                 </div>
             </div>
@@ -1182,9 +1524,20 @@
                     <label>الإشعارات</label>
                     <input type="checkbox" id="notifications-toggle" checked>
                 </div>
-                <button class="btn-secondary" id="test-adhan" style="width:100%; margin-top:10px;">تجربة صوت الأذان</button>
-                <button class="btn-primary" id="install-pwa" style="width:100%; margin-top:10px; display:none;">تثبيت التطبيق</button>
-                <button class="btn-secondary" id="reset-app" style="width:100%; margin-top:10px; color:var(--danger)">إعادة ضبط التطبيق</button>
+                <div class="settings-buttons">
+                    <button class="btn-primary" id="install-pwa-btn" style="display:none;">
+                        <i class="fas fa-download"></i> تحميل التطبيق
+                    </button>
+                    <button class="btn-primary" id="enable-notifications-btn">
+                        <i class="fas fa-bell"></i> تفعيل إشعارات الأذان
+                    </button>
+                    <button class="btn-secondary" id="test-adhan">
+                        <i class="fas fa-volume-up"></i> تجربة صوت الأذان
+                    </button>
+                    <button class="btn-danger" id="reset-app">
+                        <i class="fas fa-redo"></i> إعادة ضبط التطبيق
+                    </button>
+                </div>
             </div>
         </section>
 
@@ -1275,7 +1628,6 @@
             initSettings();
             
             // Batch 5 Init
-            initPWA();
             initAdhan();
 
             updateUI();
@@ -1338,6 +1690,14 @@
                 if (data.code === 200) {
                     AppState.data.prayers = data.data;
                     renderPrayerTimes();
+                    
+                    // Schedule notifications via Service Worker
+                    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                        navigator.serviceWorker.controller.postMessage({
+                            type: 'SCHEDULE_NOTIFICATIONS',
+                            timings: data.data.timings
+                        });
+                    }
                 }
             } catch (e) {
                 console.error('Error fetching prayers:', e);
@@ -1607,7 +1967,7 @@
             
             const percentage = (currentDhikr.count / currentDhikr.target) * 360;
             document.getElementById('dhikr-progress').style.background = 
-                `conic-gradient(var(--primary-color) ${percentage}deg, #ddd ${percentage}deg)`;
+                `conic-gradient(var(--accent-color) ${percentage}deg, #ddd ${percentage}deg)`;
             
             // Update global stats
             document.getElementById('dhikr-count').textContent = currentDhikr.count; // Simplified
@@ -2027,12 +2387,46 @@
 
         // Live
         function initLive() {
-            document.querySelectorAll('.placeholder-video').forEach(el => {
-                el.addEventListener('click', () => {
-                    el.style.display = 'none';
-                    // In a real app, we might load the iframe here to save data
-                });
-            });
+            // البث المباشر يتم تحميله عند الضغط من خلال الدوال المخصصة
+        }
+
+        function loadMakkahStream(placeholder) {
+            const wrapper = placeholder.parentElement;
+            placeholder.remove();
+            
+            const iframe = document.createElement('iframe');
+            iframe.src = 'https://www.youtube.com/embed/60jU1HGlSVQ?si=d2zf5GFwYazllXNZ';
+            iframe.title = 'YouTube video player';
+            iframe.frameBorder = '0';
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+            iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+            iframe.allowFullscreen = true;
+            iframe.style.position = 'absolute';
+            iframe.style.top = '0';
+            iframe.style.left = '0';
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = 'none';
+            
+            wrapper.appendChild(iframe);
+        }
+
+        function loadMadinahStream(placeholder) {
+            const wrapper = placeholder.parentElement;
+            placeholder.remove();
+            
+            const iframe = document.createElement('iframe');
+           iframe.src = 'https://www.youtube.com/embed/zZmE-NRMpxo?rel=0';
+            iframe.allow = 'encrypted-media; picture-in-picture';
+            iframe.allowFullscreen = true;
+            iframe.style.position = 'absolute';
+            iframe.style.top = '0';
+            iframe.style.left = '0';
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = 'none';
+            
+            wrapper.appendChild(iframe);
         }
 
         // Tracker
@@ -2141,6 +2535,68 @@
                 playAdhan();
                 alert('يتم تشغيل الأذان الآن...');
             });
+
+            // PWA Install
+            let deferredPrompt;
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                document.getElementById('install-pwa-btn').style.display = 'inline-flex';
+            });
+
+            document.getElementById('install-pwa-btn').addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    if (outcome === 'accepted') {
+                        alert('تم تثبيت التطبيق بنجاح! 🎉');
+                    }
+                    deferredPrompt = null;
+                    document.getElementById('install-pwa-btn').style.display = 'none';
+                }
+            });
+
+            // Notifications Permission
+            document.getElementById('enable-notifications-btn').addEventListener('click', async () => {
+                if (!('Notification' in window)) {
+                    alert('المتصفح لا يدعم الإشعارات');
+                    return;
+                }
+
+                if (Notification.permission === 'granted') {
+                    alert('الإشعارات مفعلة بالفعل ✅');
+                    return;
+                }
+
+                if (Notification.permission !== 'denied') {
+                    const permission = await Notification.requestPermission();
+                    if (permission === 'granted') {
+                        alert('تم تفعيل الإشعارات بنجاح! ستصلك إشعارات الأذان حتى عند إغلاق التطبيق 🔔');
+                        
+                        // Register Service Worker for background notifications
+                        if ('serviceWorker' in navigator) {
+                            try {
+                                const registration = await navigator.serviceWorker.register('sw.js');
+                                console.log('Service Worker registered:', registration);
+                            } catch (error) {
+                                console.error('Service Worker registration failed:', error);
+                            }
+                        }
+
+                        // Send test notification
+                        new Notification('إيمانيات', {
+                            body: 'تم تفعيل الإشعارات بنجاح! ستصلك إشعارات مواقيت الصلاة',
+                            icon: 'icon-192.png',
+                            badge: 'icon-192.png',
+                            tag: 'test-notification'
+                        });
+                    } else {
+                        alert('تم رفض تفعيل الإشعارات ❌');
+                    }
+                } else {
+                    alert('الإشعارات محظورة. يرجى تفعيلها من إعدادات المتصفح');
+                }
+            });
         }
 
         function saveSettings() {
@@ -2171,32 +2627,6 @@
         }
 
         // --- Batch 5 Features ---
-
-        // PWA
-        let deferredPrompt;
-
-        function initPWA() {
-            window.addEventListener('beforeinstallprompt', (e) => {
-                e.preventDefault();
-                deferredPrompt = e;
-                document.getElementById('install-pwa').style.display = 'block';
-            });
-
-            document.getElementById('install-pwa').addEventListener('click', async () => {
-                if (deferredPrompt) {
-                    deferredPrompt.prompt();
-                    const { outcome } = await deferredPrompt.userChoice;
-                    if (outcome === 'accepted') {
-                        deferredPrompt = null;
-                        document.getElementById('install-pwa').style.display = 'none';
-                    }
-                }
-            });
-
-            window.addEventListener('appinstalled', () => {
-                document.getElementById('install-pwa').style.display = 'none';
-            });
-        }
 
         // Adhan
         let adhanPlayed = {}; // Track played adhans for today
@@ -2253,6 +2683,31 @@
             audio.play().catch(e => console.log('Audio play failed (interaction needed):', e));
         }
 
+        // PWA Install Logic
+        let deferredPrompt;
+        const installBtn = document.getElementById('install-btn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'flex';
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    installBtn.style.display = 'none';
+                }
+                deferredPrompt = null;
+            }
+        });
+
+        window.addEventListener('appinstalled', () => {
+            installBtn.style.display = 'none';
+        });
+
         // Service Worker Registration
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js')
@@ -2262,3 +2717,4 @@
     </script>
 </body>
 </html>
+
